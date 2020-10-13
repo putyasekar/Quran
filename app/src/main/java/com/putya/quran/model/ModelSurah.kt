@@ -1,4 +1,26 @@
 package com.putya.quran.model
 
-class ModelSurah {
+import java.io.Serializable
+
+class ModelSurah : Serializable {
+
+    var arti: String? = null
+
+    @JvmField
+    var asma: String? = null
+
+    @JvmField
+    var ayat: String? = null
+
+    @JvmField
+    var nama: String? = null
+
+    @JvmField
+    var type: String? = null
+    var audio: String? = null
+
+    @JvmField
+    var nomor: String? = null
+    var keterangan: String? = null
+
 }

@@ -40,7 +40,7 @@
         <service
             android:name=".utils.GetAddressIntentService"
             android:exported="false"
-            tools:ignore="Instantiatable"/>  //ini ntar hapus
+            tools:ignore="Instantiatable"/>
 
     </application>
 </manifest>
