@@ -29,10 +29,10 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:layout_margin="10dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="4dp">
+                android:layout_height="@dimen/_180dp"
+                android:layout_margin="@dimen/_10dp"
+                app:cardCornerRadius="@dimen/_10dp"
+                app:cardElevation="@dimen/_4dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -44,10 +44,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="50dp"
+                        android:layout_marginStart="@dimen/_20dp"
+                        android:layout_marginTop="@dimen/_50dp"
                         android:textColor="@android:color/white"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/_18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -55,19 +55,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tvToday"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="@dimen/_30dp"
+                        android:layout_marginTop="@dimen/_10dp"
                         android:textColor="@android:color/white"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/_12sp" />
 
                     <View
                         android:id="@+id/viewDivider"
-                        android:layout_width="100dp"
-                        android:layout_height="1dp"
+                        android:layout_width="@dimen/_100dp"
+                        android:layout_height="@dimen/_01dp"
                         android:layout_below="@id/tvDate"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginStart="@dimen/_20dp"
+                        android:layout_marginTop="@dimen/_10dp"
+                        android:layout_marginBottom="@dimen/_10dp"
                         android:background="@android:color/white" />
 
                     <TextView
@@ -75,10 +75,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/viewDivider"
-                        android:layout_marginStart="30dp"
+                        android:layout_marginStart="@dimen/_30dp"
                         android:textAllCaps="true"
                         android:textColor="@android:color/white"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/_12sp" />
 
                 </RelativeLayout>
 
@@ -87,11 +87,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/_10dp"
+                android:layout_marginTop="@dimen/_10dp"
                 android:text="@string/daftar_surah"
                 android:textColor="@android:color/black"
-                android:textSize="20sp"
+                android:textSize="@dimen/_20sp"
                 android:textStyle="bold" />
 
             <RelativeLayout
@@ -102,7 +102,7 @@
                     android:id="@+id/rvSurah"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp" />
+                    android:layout_margin="@dimen/_05dp" />
 
             </RelativeLayout>
 
@@ -117,8 +117,8 @@
         android:layout_gravity="bottom"
         android:backgroundTint="@color/colorPrimary"
         app:fabAlignmentMode="center"
-        app:fabCradleMargin="10dp"
-        app:fabCradleRoundedCornerRadius="50dp"
+        app:fabCradleMargin="@dimen/_10dp"
+        app:fabCradleRoundedCornerRadius="@dimen/_50dp"
         app:hideOnScroll="true">
 
         <LinearLayout
@@ -129,7 +129,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/_50dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -142,11 +142,11 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="@dimen/_36dp"
+                        android:layout_height="@dimen/_36dp"
                         android:background="@drawable/bg_circle"
                         android:backgroundTint="@android:color/white"
-                        android:padding="8dp"
+                        android:padding="@dimen/_08dp"
                         android:src="@drawable/ic_calendar"
                         app:tint="@color/colorPrimary" />
 
@@ -171,11 +171,11 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="@dimen/_36dp"
+                        android:layout_height="@dimen/_36dp"
                         android:background="@drawable/bg_circle"
                         android:backgroundTint="@android:color/white"
-                        android:padding="8dp"
+                        android:padding="@dimen/_08dp"
                         android:src="@drawable/ic_mosque"
                         app:tint="@color/colorPrimary" />
 
@@ -190,7 +190,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="4dp"
+        android:elevation="@dimen/_04dp"
         android:tint="@android:color/white"
         app:backgroundTint="@color/colorPrimary"
         app:layout_anchor="@+id/navBar"

@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="80dp">
+    android:paddingBottom="@dimen/_80dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_margin="16dp"
-        android:padding="16dp"
+        android:layout_margin="@dimen/_16dp"
+        android:padding="@dimen/_16dp"
         app:cardBackgroundColor="@android:color/white"
-        app:cardCornerRadius="20dp">
+        app:cardCornerRadius="@dimen/_20dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -23,10 +23,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/_10dp"
                 android:text="@string/jadwal_sholat"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="24sp"
+                android:textSize="@dimen/_24sp"
                 android:textStyle="bold" />
 
             <RelativeLayout
@@ -34,16 +34,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvTitles"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="25dp"
+                android:layout_marginLeft="@dimen/_25dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginRight="@dimen/_25dp"
                 android:background="@drawable/textlines"
                 android:gravity="center">
 
                 <Spinner
                     android:id="@+id/spinKota"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp" />
+                    android:layout_height="@dimen/_50dp" />
 
             </RelativeLayout>
 
@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rlSpin"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/_10dp"
                 android:orientation="vertical">
 
                 <com.vivekkaushik.datepicker.DatePickerTimeline
@@ -67,14 +67,14 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="@dimen/_10dp">
 
                     <TextView
                         android:id="@+id/tv_pray_name_fajr"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:layout_marginStart="40dp"
+                        android:layout_marginStart="@dimen/_40dp"
                         android:text="@string/subuh" />
 
                     <TextView
@@ -82,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="40dp"
+                        android:layout_marginEnd="@dimen/_40dp"
                         android:text="@string/_05_30_am" />
 
                 </RelativeLayout>
@@ -90,14 +90,14 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="@dimen/_10dp">
 
                     <TextView
                         android:id="@+id/tv_pray_name_dhuhr"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:layout_marginStart="40dp"
+                        android:layout_marginStart="@dimen/_40dp"
                         android:text="@string/dzuhur" />
 
                     <TextView
@@ -105,7 +105,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="40dp"
+                        android:layout_marginEnd="@dimen/_40dp"
                         android:text="@string/_05_30_am" />
 
                 </RelativeLayout>
@@ -113,14 +113,14 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="@dimen/_10dp">
 
                     <TextView
                         android:id="@+id/tv_pray_name_asr"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:layout_marginStart="40dp"
+                        android:layout_marginStart="@dimen/_40dp"
                         android:text="@string/ashar" />
 
                     <TextView
@@ -128,7 +128,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="40dp"
+                        android:layout_marginEnd="@dimen/_40dp"
                         android:text="@string/_05_30_am" />
 
                 </RelativeLayout>
@@ -136,14 +136,14 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="@dimen/_10dp">
 
                     <TextView
                         android:id="@+id/tv_pray_name_maghrib"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:layout_marginStart="40dp"
+                        android:layout_marginStart="@dimen/_40dp"
                         android:text="@string/maghrib" />
 
                     <TextView
@@ -151,7 +151,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="40dp"
+                        android:layout_marginEnd="@dimen/_40dp"
                         android:text="@string/_05_30_am" />
 
                 </RelativeLayout>
@@ -159,14 +159,14 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="@dimen/_10dp">
 
                     <TextView
                         android:id="@+id/tv_pray_name_isha"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:layout_marginStart="40dp"
+                        android:layout_marginStart="@dimen/_40dp"
                         android:text="@string/isya" />
 
                     <TextView
@@ -174,7 +174,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="40dp"
+                        android:layout_marginEnd="@dimen/_40dp"
                         android:text="@string/_05_30_am" />
 
                 </RelativeLayout>
