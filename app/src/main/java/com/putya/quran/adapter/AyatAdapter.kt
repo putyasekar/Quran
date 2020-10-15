@@ -10,6 +10,7 @@ import com.putya.quran.R
 import com.putya.quran.model.ModelAyat
 
 class AyatAdapter(
+
     private val mContext: Context,
     private val items: List<ModelAyat>
 
@@ -32,11 +33,24 @@ class AyatAdapter(
         return items.size
     }
 
-    //Class Holder
+    //Class Holder //ini ntar jg gue ganti kali
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tvNomorAyat: TextView = itemView.findViewById(R.id.tvNomorAyat)
         var tvArabic: TextView = itemView.findViewById(R.id.tvArabic)
         var tvTerjemahan: TextView = itemView.findViewById(R.id.tvTerjemahan)
 
     }
+
+//    //Class Holder
+//    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+//        var tvNomorAyat: TextView
+//        var tvArabic: TextView
+//        var tvTerjemahan: TextView
+//
+//        init {
+//            tvNomorAyat = itemView.findViewById(R.id.tvNomorAyat)
+//            tvArabic = itemView.findViewById(R.id.tvArabic)
+//            tvTerjemahan = itemView.findViewById(R.id.tvTerjemahan)
+//        }
+//    }
 }
