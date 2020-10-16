@@ -23,26 +23,25 @@ import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONArrayRequestListener
 import com.putya.quran.R
-import com.putya.quran.fragment.JadwalShalatFragment
 import com.putya.quran.adapter.SurahAdapter
-import com.putya.quran.adapter.SurahAdapter.onSelectData
 import com.putya.quran.model.ModelSurah
 import com.putya.quran.networking.Api
 import com.putya.quran.utils.GetAddressIntentService
 import com.google.android.gms.location.*
+import com.putya.quran.fragment.JadwalShalatFragment.Companion.newInstance
 import kotlinx.android.synthetic.main.activity_list_surah.*
 import org.json.JSONArray
 import org.json.JSONException
 import java.util.*
-import javax.xml.datatype.DatatypeFactory.newInstance
 
-class ListSurahActivity : AppCompatActivity(), onSelectData {
+class ListSurahActivity : AppCompatActivity(), SurahAdapter.onSelectData1 {
 
     var surahAdapter: SurahAdapter? = null
     var progressDialog: ProgressDialog? = null
     var modelSurah: MutableList<ModelSurah> = ArrayList()
     var hariIni: String? = null
     var tanggal: String? = null
+
     private var fusedLocationClient: FusedLocationProviderClient? = null
     private var addressResultReceiver: LocationAddressResultReceiver? = null
     private var currentLocation: Location? = null
@@ -66,25 +65,28 @@ class ListSurahActivity : AppCompatActivity(), onSelectData {
         addressResultReceiver = LocationAddressResultReceiver(Handler())
 
         val dateNow = Calendar.getInstance().time
+
         hariIni = DateFormat.format("EEEE", dateNow) as String
         tanggal = DateFormat.format("d MMMM yyyy", dateNow) as String
+
         tvToday.text = "$hariIni,"
         tvDate.text = tanggal
 
-        val sendDetail = newInstance("Detail")
+        val sendDetail = newInstance("detail")
         llTime.setOnClickListener(View.OnClickListener {
             sendDetail.show(supportFragmentManager, sendDetail.tag)
-            //startActivity(new Intent(MainActivity.this, FragmentMenu.class));
         })
 
         llMosque.setOnClickListener(View.OnClickListener {
             startActivity(Intent(this@ListSurahActivity, MasjidActivity::class.java))
         })
+
         rvSurah.layoutManager = LinearLayoutManager(this)
         rvSurah.setHasFixedSize(true)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         locationCallback = object : LocationCallback() {
+
             override fun onLocationResult(locationResult: LocationResult) {
                 currentLocation = locationResult.locations[0]
                 address
@@ -96,18 +98,22 @@ class ListSurahActivity : AppCompatActivity(), onSelectData {
         listSurah()
     }
 
-    private fun listSurah{
+    private fun listSurah() {
         progressDialog!!.show()
         AndroidNetworking.get(Api.URL_LIST_SURAH)
             .setPriority(Priority.MEDIUM)
             .build()
             .getAsJSONArray(object : JSONArrayRequestListener {
+
                 override fun onResponse(response: JSONArray) {
                     for (i in 0 until response.length()) {
+
                         try {
                             progressDialog!!.dismiss()
+
                             val dataApi = ModelSurah()
                             val jsonObject = response.getJSONObject(i)
+
                             dataApi.nomor = jsonObject.getString("nomor")
                             dataApi.nama = jsonObject.getString("nama")
                             dataApi.type = jsonObject.getString("type")
@@ -116,10 +122,14 @@ class ListSurahActivity : AppCompatActivity(), onSelectData {
                             dataApi.arti = jsonObject.getString("arti")
                             dataApi.audio = jsonObject.getString("audio")
                             dataApi.keterangan = jsonObject.getString("keterangan")
+
                             modelSurah.add(dataApi)
+
                             showListSurah()
+
                         } catch (e: JSONException) {
                             e.printStackTrace()
+
                             Toast.makeText(
                                 this@ListSurahActivity, "Gagal menampilkan data!",
                                 Toast.LENGTH_SHORT
@@ -130,6 +140,7 @@ class ListSurahActivity : AppCompatActivity(), onSelectData {
 
                 override fun onError(anError: ANError) {
                     progressDialog!!.dismiss()
+
                     Toast.makeText(
                         this@ListSurahActivity, "Tidak ada jaringan internet!",
                         Toast.LENGTH_SHORT
@@ -143,12 +154,6 @@ class ListSurahActivity : AppCompatActivity(), onSelectData {
         rvSurah!!.adapter = surahAdapter
     }
 
-    override fun onSelected(modelSurah: ModelSurah) {
-        val intent = Intent(this@ListSurahActivity, DetailSurahActivity::class.java)
-        intent.putExtra("detailSurah", modelSurah)
-        startActivity(intent)
-    }
-
     private fun startLocationUpdates() {
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -159,11 +164,15 @@ class ListSurahActivity : AppCompatActivity(), onSelectData {
                 this,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE
             )
+
         } else {
+
             val locationRequest = LocationRequest()
+
             locationRequest.interval = 1000
             locationRequest.fastestInterval = 1000
             locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+
             fusedLocationClient!!.requestLocationUpdates(locationRequest, locationCallback, null)
         }
     }
@@ -176,11 +185,14 @@ class ListSurahActivity : AppCompatActivity(), onSelectData {
                     "Can't find current address, ",
                     Toast.LENGTH_SHORT
                 ).show()
+
                 return
             }
             val intent = Intent(this, GetAddressIntentService::class.java)
+
             intent.putExtra("add_receiver", addressResultReceiver)
             intent.putExtra("add_location", currentLocation)
+
             startService(intent)
         }
 
@@ -188,11 +200,14 @@ class ListSurahActivity : AppCompatActivity(), onSelectData {
         requestCode: Int,
         permissions: Array<String>,
         grantResults: IntArray
+
     ) {
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startLocationUpdates()
+
             } else {
+
                 Toast.makeText(this, "Location permission not granted", Toast.LENGTH_SHORT).show()
             }
         }
@@ -200,10 +215,12 @@ class ListSurahActivity : AppCompatActivity(), onSelectData {
 
     private inner class LocationAddressResultReceiver internal constructor(handler: Handler?) :
         ResultReceiver(handler) {
+
         override fun onReceiveResult(resultCode: Int, resultData: Bundle) {
             if (resultCode == 0) {
                 address
             }
+
             if (resultCode == 1) {
                 Toast.makeText(
                     this@ListSurahActivity,
@@ -211,6 +228,7 @@ class ListSurahActivity : AppCompatActivity(), onSelectData {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+
             val currentAdd = resultData.getString("address_result")
             showResults(currentAdd)
         }
@@ -232,5 +250,11 @@ class ListSurahActivity : AppCompatActivity(), onSelectData {
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 2
+    }
+
+    override fun onSelected(modelSurah: ModelSurah?) {
+        val intent = Intent(this@ListSurahActivity, DetailSurahActivity::class.java)
+        intent.putExtra("detailSurah", modelSurah)
+        startActivity(intent)
     }
 }

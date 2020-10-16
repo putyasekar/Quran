@@ -24,7 +24,6 @@ import com.putya.quran.R
 import com.putya.quran.adapter.AyatAdapter
 import com.putya.quran.model.ModelAyat
 import com.putya.quran.model.ModelSurah
-import com.putya.quran.networking.Api.URL_LIST_AYAT
 import kotlinx.android.synthetic.main.activity_detail_surah.*
 import org.json.JSONArray
 import org.json.JSONException
@@ -45,7 +44,7 @@ class DetailSurahActivity : AppCompatActivity() {
     var modelAyat: MutableList<ModelAyat> = ArrayList()
     var mHandler: Handler? = null
 
-    @SuppressLint("RestrictedApi")
+    @SuppressLint("RestrictedApi", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_surah)
@@ -97,6 +96,7 @@ class DetailSurahActivity : AppCompatActivity() {
                     mediaPlayer.setDataSource(audio)
                     mediaPlayer.prepare()
                     mediaPlayer.start()
+
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -107,6 +107,7 @@ class DetailSurahActivity : AppCompatActivity() {
             fabStop.setOnClickListener(View.OnClickListener {
                 mediaPlayer.stop()
                 mediaPlayer.reset()
+
                 fabPlay.visibility = View.VISIBLE
                 fabStop.visibility = View.GONE
             })
@@ -119,48 +120,55 @@ class DetailSurahActivity : AppCompatActivity() {
         rvAyat.layoutManager = LinearLayoutManager(this)
         rvAyat.setHasFixedSize(true)
 
-        listAyat()
+//        listAyat()
     }
 
-    private fun listAyat() {
-        progressDialog!!.show()
-
-        AndroidNetworking.get(Api.URL_LIST_AYAT)
-            .addPathParameter("nomor", nomor)
-            .setPriority(Priority.MEDIUM)
-            .build()
-            .getAsJSONArray(object : JSONArrayRequestListener {
-                override fun onResponse(response: JSONArray) {
-                    for (i in 0 until response.length()) {
-                        try {
-                            progressDialog!!.dismiss()
-                            val dataApi = ModelAyat()
-                            val jsonObject = response.getJSONObject(i)
-                            dataApi.nomor = jsonObject.getString("nomor")
-                            dataApi.arab = jsonObject.getString("arab")
-                            dataApi.indo = jsonObject.getString("indonesia")
-                            dataApi.terjemahan = jsonObject.getString("terjemah")
-                            modelAyat.add(dataApi)
-                            showListAyat()
-                        } catch (e: JSONException) {
-                            e.printStackTrace()
-                            Toast.makeText(
-                                this@DetailSurahActivity, "Gagal menampilkan data!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-                }
-
-                override fun onError(anError: ANError) {
-                    progressDialog!!.dismiss()
-                    Toast.makeText(
-                        this@DetailSurahActivity, "Tidak ada jaringan internet!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            })
-    }
+//    private fun listAyat() {
+//        progressDialog!!.show()
+//
+//        AndroidNetworking.get(Api.URL_API_AYAT)
+//            .addPathParameter("nomor", nomor)
+//            .setPriority(Priority.MEDIUM)
+//            .build()
+//            .getAsJSONArray(object : JSONArrayRequestListener {
+//
+//                override fun onResponse(response: JSONArray) {
+//                    for (i in 0 until response.length()) {
+//                        try {
+//                            progressDialog!!.dismiss()
+//                            val dataApi = ModelAyat()
+//                            val jsonObject = response.getJSONObject(i)
+//
+//                            dataApi.nomor = jsonObject.getString("nomor")
+//                            dataApi.arab = jsonObject.getString("arab")
+//                            dataApi.indo = jsonObject.getString("indonesia")
+//                            dataApi.terjemahan = jsonObject.getString("terjemah")
+//
+//                            modelAyat.add(dataApi)
+//
+//                            showListAyat()
+//
+//                        } catch (e: JSONException) {
+//                            e.printStackTrace()
+//
+//                            Toast.makeText(
+//                                this@DetailSurahActivity, "Gagal menampilkan data!",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                        }
+//                    }
+//                }
+//
+//                override fun onError(anError: ANError) {
+//                    progressDialog!!.dismiss()
+//
+//                    Toast.makeText(
+//                        this@DetailSurahActivity, "Tidak ada jaringan internet!",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+//            })
+//    }
 
     private fun showListAyat() {
         ayatAdapter = AyatAdapter(this@DetailSurahActivity, modelAyat)
@@ -170,6 +178,7 @@ class DetailSurahActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()
+
             return true
         }
         return super.onOptionsItemSelected(item)
