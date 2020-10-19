@@ -179,11 +179,13 @@ class ListSurahActivity : AppCompatActivity(), SurahAdapter.onSelectData1 {
 
     private val address: Unit
         get() {
+
             if (!Geocoder.isPresent()) {
                 Toast.makeText(
                     this@ListSurahActivity,
                     "Can't find current address, ",
                     Toast.LENGTH_SHORT
+
                 ).show()
 
                 return
@@ -226,6 +228,7 @@ class ListSurahActivity : AppCompatActivity(), SurahAdapter.onSelectData1 {
                     this@ListSurahActivity,
                     "Address not found, ",
                     Toast.LENGTH_SHORT
+
                 ).show()
             }
 
@@ -254,6 +257,7 @@ class ListSurahActivity : AppCompatActivity(), SurahAdapter.onSelectData1 {
 
     override fun onSelected(modelSurah: ModelSurah?) {
         val intent = Intent(this@ListSurahActivity, DetailSurahActivity::class.java)
+
         intent.putExtra("detailSurah", modelSurah)
         startActivity(intent)
     }
