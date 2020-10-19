@@ -43,31 +43,13 @@ class GetAddressIntentService : IntentService(IDENTIFIER) {
         } catch (ignored: Exception) {
 
         }
-        if (addresses == null || addresses.size == 0) {
+        if (addresses == null || addresses.isEmpty()) {
             msg = "No address found for the location"
             sendResultsToReceiver(1, msg)
 
         } else {
             val address = addresses[0]
             val addressDetails = StringBuffer()
-
-            /*addressDetails.append(address.getFeatureName());
-            addressDetails.append("\n");
-
-            addressDetails.append(address.getLocality());
-            addressDetails.append("\n");
-
-            addressDetails.append(address.getSubAdminArea());
-            addressDetails.append("\n");
-
-            addressDetails.append(address.getPostalCode());
-            addressDetails.append("\n");
-
-            addressDetails.append(address.getThoroughfare());
-            addressDetails.append("\n");
-
-            addressDetails.append(address.getCountryName());
-            addressDetails.append("\n");*/
 
             addressDetails.append(address.adminArea)
             addressDetails.append("\n")
