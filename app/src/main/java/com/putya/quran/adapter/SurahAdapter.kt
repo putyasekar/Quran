@@ -51,7 +51,7 @@ class SurahAdapter(
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return items.size
     }
 
 }

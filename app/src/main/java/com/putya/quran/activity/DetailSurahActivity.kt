@@ -10,7 +10,6 @@ import android.os.Handler
 import android.text.Html
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +17,6 @@ import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONArrayRequestListener
-import com.putya.quran.BuildConfig
 import com.putya.quran.R
 import com.putya.quran.adapter.AyatAdapter
 import com.putya.quran.model.ModelAyat
@@ -31,6 +29,7 @@ import java.io.IOException
 import java.util.*
 
 class DetailSurahActivity : AppCompatActivity() {
+
     var nomor: String? = null
     var nama: String? = null
     var arti: String? = null
@@ -44,29 +43,23 @@ class DetailSurahActivity : AppCompatActivity() {
     var modelAyat: MutableList<ModelAyat> = ArrayList()
     var mHandler: Handler? = null
 
-    @SuppressLint("RestrictedApi", "SetTextI18n")
+    @SuppressLint("RestrictedApi", "Assert", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_surah)
 
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-
         toolbar_detail.title = null
         setSupportActionBar(toolbar_detail)
-
-//        assert(supportActionBar != null) bisa jd ini
-
-        if (BuildConfig.DEBUG && supportActionBar == null) {
-            error("Assertion failed")
-        }
+        assert(supportActionBar != null)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         mHandler = Handler()
 
-        modelSurah = intent.getSerializableExtra("Detail Surah") as ModelSurah
+        //get data dari listsurat
+        modelSurah = intent
+            .getSerializableExtra("detailSurah")
+                as ModelSurah
+
         if (modelSurah != null) {
             nomor = modelSurah!!.nomor
             nama = modelSurah!!.nama
@@ -79,46 +72,25 @@ class DetailSurahActivity : AppCompatActivity() {
             fabStop.visibility = View.GONE
             fabPlay.visibility = View.VISIBLE
 
+            //set text
             tvHeader.text = nama
             tvTitle.text = nama
             tvSubTitle.text = arti
-            tvInfo.text = "$type - $ayat Ayat "
+            tvInfo.text = "$type - $ayat Ayat"
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) tvKet.text = Html.fromHtml(
-                keterangan,
-                Html.FROM_HTML_MODE_COMPACT
-            )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                tvKet.text = Html.fromHtml(
+                    keterangan, Html.FROM_HTML_MODE_COMPACT
+                )
+
             else {
                 tvKet.text = Html.fromHtml(keterangan)
             }
 
-            val mediaPlayer = MediaPlayer()
-
-            fabPlay.setOnClickListener(View.OnClickListener {
-                try {
-                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
-                    mediaPlayer.setDataSource(audio)
-                    mediaPlayer.prepare()
-                    mediaPlayer.start()
-
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-                fabPlay.visibility = View.GONE
-                fabStop.visibility = View.VISIBLE
-            })
-
-            fabStop.setOnClickListener(View.OnClickListener {
-                mediaPlayer.stop()
-                mediaPlayer.reset()
-
-                fabPlay.visibility = View.VISIBLE
-                fabStop.visibility = View.GONE
-            })
             playAudio()
         }
         progressDialog = ProgressDialog(this)
-        progressDialog!!.setTitle("Mohon Tunggu")
+        progressDialog!!.setTitle("Mohon tunggu")
         progressDialog!!.setCancelable(false)
         progressDialog!!.setMessage("Sedang menampilkan data...")
 
@@ -127,11 +99,6 @@ class DetailSurahActivity : AppCompatActivity() {
 
         listAyat()
     }
-
-    private fun playAudio() {
-        TODO("Not yet implemented")
-    }
-
 
     private fun listAyat() {
         progressDialog!!.show()
@@ -143,14 +110,12 @@ class DetailSurahActivity : AppCompatActivity() {
             .getAsJSONArray(object : JSONArrayRequestListener {
 
                 override fun onResponse(response: JSONArray) {
-                    for (i in 0 until response.length()) {
 
+                    for (i in 0 until response.length()) {
                         try {
                             progressDialog!!.dismiss()
-
                             val dataApi = ModelAyat()
                             val jsonObject = response.getJSONObject(i)
-
                             dataApi.nomor = jsonObject.getString("nomor")
                             dataApi.arab = jsonObject.getString("ar")
                             dataApi.indo = jsonObject.getString("id")
@@ -163,36 +128,74 @@ class DetailSurahActivity : AppCompatActivity() {
                         } catch (e: JSONException) {
                             e.printStackTrace()
                             Toast.makeText(
-                                this@DetailSurahActivity, "Gagal menampilkan data!",
-                                Toast.LENGTH_SHORT
+                                this@DetailSurahActivity,
+                                "Gagal mengambil data", Toast.LENGTH_SHORT
 
                             ).show()
                         }
                     }
                 }
 
-                override fun onError(anError: ANError) {
+                override fun onError(anError: ANError?) {
                     progressDialog!!.dismiss()
                     Toast.makeText(
-                        this@DetailSurahActivity, "Tidak ada jaringan internet!",
+                        this@DetailSurahActivity,
+                        "Tidak ada jarigan internet",
                         Toast.LENGTH_SHORT
 
                     ).show()
                 }
+
             })
     }
 
     private fun showListAyat() {
-        ayatAdapter = AyatAdapter(this@DetailSurahActivity, modelAyat)
+        ayatAdapter = AyatAdapter(
+            this@DetailSurahActivity,
+            modelAyat
+        )
         rvAyat!!.adapter = ayatAdapter
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()
-
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    @SuppressLint("RestrictedApi")
+    private fun playAudio() {
+        val mediaPlayer = MediaPlayer()
+        fabPlay.setOnClickListener(View.OnClickListener {
+
+            try {
+                mediaPlayer.setAudioStreamType(
+                    AudioManager
+                        .STREAM_MUSIC
+                )
+
+                mediaPlayer.setDataSource(audio)
+                mediaPlayer.prepare()
+                mediaPlayer.start()
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+            fabPlay.visibility = View.GONE
+            fabStop.visibility = View.VISIBLE
+        })
+
+        fabStop.setOnClickListener(View.OnClickListener {
+            mediaPlayer.stop()
+            mediaPlayer.reset()
+
+            fabPlay.visibility = View.VISIBLE
+            fabStop.visibility = View.GONE
+        })
+
+
     }
 }
