@@ -171,7 +171,36 @@ class MasjidActivity : AppCompatActivity(), LocationListener {
     }
 
     private fun downloadUrl(strUrl: String): String {
-        TODO("Not yet implemented")
+        var data = ""
+        val iStream: InputStream
+        val urlConnection: HttpURLConnection
+
+        try {
+            var url = URL(strUrl)
+
+            urlConnection = url.openConnection() as HttpURLConnection
+            urlConnection.connect()
+
+            iStream = urlConnection.inputStream
+
+            val br = BufferedReader(InputStreamReader(iStream))
+            val sb = StringBuilder()
+            var line: String?
+
+            while (br.readLine().also { line = it } != null) {
+                sb.append(line)
+            }
+
+            data = sb.toString()
+            br.close()
+            iStream.close()
+            urlConnection.disconnect()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return data
     }
 }
 
