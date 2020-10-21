@@ -176,7 +176,7 @@ class MasjidActivity : AppCompatActivity(), LocationListener {
         val urlConnection: HttpURLConnection
 
         try {
-            var url = URL(strUrl)
+            val url = URL(strUrl)
 
             urlConnection = url.openConnection() as HttpURLConnection
             urlConnection.connect()
@@ -201,6 +201,27 @@ class MasjidActivity : AppCompatActivity(), LocationListener {
         }
 
         return data
+    }
+
+    override fun onStatusChanged(s: String, i: Int, bundle: Bundle) {
+
+    }
+
+    override fun onProviderEnabled(s: String) {
+
+    }
+
+    override fun onProviderDisabled(s: String) {
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }
 
