@@ -152,6 +152,20 @@ class MasjidActivity : AppCompatActivity(), LocationListener {
                 val markerOptions = MarkerOptions()
                 val hmPlace = list[i]
                 val pinDrop = BitmapDescriptorFactory.fromResource(R.drawable.ic_place)
+
+                val lat = hmPlace["lat"]!!.toDouble()
+                val lng = hmPlace["lng"]!!.toDouble()
+
+                val name = hmPlace["place_name"]
+                val streetName = hmPlace["vicinity"]
+
+                val latLng = LatLng(lat, lng)
+
+                markerOptions.icon(pinDrop)
+                markerOptions.position(latLng)
+                markerOptions.title("$name: $streetName")
+
+                mGoogleMap!!.addMarker(markerOptions)
             }
         }
     }
