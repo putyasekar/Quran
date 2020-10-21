@@ -29,6 +29,7 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
+import kotlin.collections.HashMap
 
 class MasjidActivity : AppCompatActivity(), LocationListener {
     var mGoogleMap: GoogleMap? = null
@@ -106,7 +107,58 @@ class MasjidActivity : AppCompatActivity(), LocationListener {
     @SuppressLint("StaticFieldLeak")
     private inner class PlacesTask : AsyncTask<String?, Int?, String?>() {
         override fun doInBackground(vararg p0: String?): String? {
-            TODO("Not yet implemented")
+
+            var data: String? = null
+
+            try {
+                data = downloadUrl(p0[0].toString())
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return data
+        }
+
+        override fun onPostExecute(result: String?) {
+            ParserTask().execute(result)
         }
     }
+
+    @SuppressLint("StaticFieldLeak")
+    private inner class ParserTask : AsyncTask<String?, Int, List<HashMap<String, String>>?>() {
+
+        var jObject: JSONObject? = null
+
+        override fun doInBackground(vararg JsonData: String?): List<HashMap<String, String>>? {
+
+            var places: List<HashMap<String, String>>? = null
+            val parserPlace = ParserPlace()
+
+            try {
+                jObject = JSONObject(JsonData[0])
+                places = parserPlace.parse(jObject!!)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            return places
+        }
+
+        override fun onPostExecute(list: List<HashMap<String, String>>?) {
+            mGoogleMap!!.clear()
+
+            for (i in list!!.indices) {
+                val markerOptions = MarkerOptions()
+                val hmPlace = list[i]
+                val pinDrop = BitmapDescriptorFactory.fromResource(R.drawable.ic_place)
+            }
+        }
+    }
+
+    private fun downloadUrl(strUrl: String): String {
+        TODO("Not yet implemented")
+    }
 }
+
+

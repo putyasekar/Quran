@@ -15,6 +15,7 @@ class ParserPlace {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
+
         return getPlaces(jPlaces)
     }
 
@@ -31,6 +32,7 @@ class ParserPlace {
                 e.printStackTrace()
             }
         }
+
         return placesList
     }
 
