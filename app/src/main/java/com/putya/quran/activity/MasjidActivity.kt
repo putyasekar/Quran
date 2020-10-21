@@ -43,7 +43,7 @@ class MasjidActivity : AppCompatActivity(), LocationListener {
         setSupportActionBar(toolbar)
 
         assert(supportActionBar != null)
-        
+
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.title = null
 
