@@ -28,7 +28,6 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.*
 import kotlin.collections.HashMap
 
 class MasjidActivity : AppCompatActivity(), LocationListener {
@@ -44,6 +43,7 @@ class MasjidActivity : AppCompatActivity(), LocationListener {
         setSupportActionBar(toolbar)
 
         assert(supportActionBar != null)
+        
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.title = null
 
